@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Замовлення книги</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 80%;
+            max-width: 800px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .book-image {
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .book-image:hover {
+            transform: scale(1.05);
+        }
+        form {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #555;
+            grid-column: span 2;
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            text-align: left;
+        }
+        input[type="text"], input[type="date"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+        input[type="submit"] {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        #order-details {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: left;
+            grid-column: span 2;
+        }
+        #order-details p {
+            margin: 10px 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="book-selection">
+            <img src="book1.jpg" alt="Книга 1" class="book-image" onclick="selectBook('Книга 1')">
+            <img src="book2.jpg" alt="Книга 2" class="book-image" onclick="selectBook('Книга 2')">
+            <img src="book3.jpg" alt="Книга 3" class="book-image" onclick="selectBook('Книга 3')">
+        </div>
+
+        <form id="order-form">
+            <h1>Замовлення книги</h1>
+
+            <input type="hidden" id="selected-book" name="selected-book">
+
+            <label for="quantity">Кількість екземплярів:</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+
+            <label for="name">Ваше ім'я:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="delivery-date">Дата доставки:</label>
+            <input type="date" id="delivery-date" name="delivery-date" required>
+
+            <label for="address">Адреса доставки:</label>
+            <input type="text" id="address" name="address" required>
+
+            <label for="comment">Коментар:</label>
+            <textarea id="comment" name="comment" rows="4"></textarea>
+
+            <input type="submit" value="Замовити книгу">
+        </form>
+
+        <div id="order-details" style="display: none;">
+            <h2>Дякуємо за замовлення!</h2>
+            <p id="order-message"></p>
+        </div>
+    </div>
+
+    <script>
+        function selectBook(bookName) {
+            document.getElementById('selected-book').value = bookName;
+            const bookImages = document.querySelectorAll('.book-image');
+            bookImages.forEach(image => {
+                if (image.alt === bookName) {
+                    image.style.border = '2px solid #4CAF50';
+                } else {
+                    image.style.border = 'none';
+                }
+            });
+        }
+
+        document.getElementById('order-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const selectedBook = document.getElementById('selected-book').value;
+            const quantity = document.getElementById('quantity').value;
+            const name = document.getElementById('name').value;
+            const deliveryDate = document.getElementById('delivery-date').value;
+            const address = document.getElementById('address').value;
+            const comment = document.getElementById('comment').value;
+
+            const orderMessage = `${name}, дякуємо за замовлення. ${quantity} екземпляр(ів) книги "${selectedBook}" буде доставлено у ${deliveryDate} за адресою: ${address}.`;
+
+            document.getElementById('order-message').textContent = orderMessage;
+            document.getElementById('order-details').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

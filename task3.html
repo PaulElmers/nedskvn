@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Введення стилізованого тексту</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #555;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            text-align: left;
+            width: 100%;
+        }
+        input[type="text"], select, input[type="number"], input[type="color"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        #styled-text {
+            margin-top: 40px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        p {
+            margin: 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Введення стилізованого тексту</h1>
+
+        <form id="text-form">
+            <label for="input-text">Введіть текст:</label>
+            <input type="text" id="input-text" name="input-text" required>
+
+            <label for="font-family">Виберіть шрифт:</label>
+            <select id="font-family" name="font-family">
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Verdana">Verdana</option>
+            </select>
+
+            <label for="font-size">Виберіть розмір шрифту:</label>
+            <input type="number" id="font-size" name="font-size" min="10" max="36" value="16" required>
+
+            <label for="font-color">Виберіть колір тексту:</label>
+            <input type="color" id="font-color" name="font-color" value="#000000">
+
+            <label for="font-style">Виберіть стиль тексту:</label>
+            <select id="font-style" name="font-style">
+                <option value="normal">Normal</option>
+                <option value="italic">Italic</option>
+                <option value="bold">Bold</option>
+            </select>
+
+            <input type="submit" value="Відобразити текст">
+        </form>
+
+        <div id="styled-text"></div>
+    </div>
+
+    <script>
+        document.getElementById('text-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const inputText = document.getElementById('input-text').value;
+            const fontFamily = document.getElementById('font-family').value;
+            const fontSize = document.getElementById('font-size').value + 'px';
+            const fontColor = document.getElementById('font-color').value;
+            const fontStyle = document.getElementById('font-style').value;
+
+            const styledTextElement = document.getElementById('styled-text');
+            styledTextElement.innerHTML = `<p style="font-family: ${fontFamily}; 
+                                                font-size: ${fontSize}; 
+                                                color: ${fontColor}; 
+                                                font-style: ${fontStyle};">
+                                                ${inputText}
+                                          </p>`;
+        });
+    </script>
+</body>
+</html>

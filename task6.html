@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронювання квитків на поїзд</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #555;
+        }
+        form {
+            display: grid;
+            gap: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="date"], select, input[type="number"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Бронювання квитків на поїзд</h1>
+
+        <form id="booking-form">
+            <label for="direction">Напрямок поїзда:</label>
+            <select id="direction" name="direction">
+                <option value="Kyiv-Lviv">Київ - Львів</option>
+                <option value="Kyiv-Odesa">Київ - Одеса</option>
+                <option value="Kyiv-Kharkiv">Київ - Харків</option>
+            </select>
+
+            <label for="date">Дата поїздки:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="seats">Оберіть місця для бронювання (вкажіть номери через кому):</label>
+            <input type="text" id="seats" name="seats" required>
+
+            <input type="submit" value="Забронювати квитки">
+        </form>
+
+        <h2>Вже заброньовані квитки</h2>
+        <table id="bookings-table">
+            <thead>
+                <tr>
+                    <th>Напрямок</th>
+                    <th>Дата</th>
+                    <th>Місця</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const bookingsData = [];
+
+        document.getElementById('booking-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const direction = document.getElementById('direction').value;
+            const date = document.getElementById('date').value;
+            const seats = document.getElementById('seats').value.split(',').map(s => s.trim());
+
+            bookingsData.push({ direction, date, seats });
+
+            const tableBody = document.querySelector('#bookings-table tbody');
+            tableBody.innerHTML = '';
+
+            bookingsData.forEach(item => {
+                const row = `<tr>
+                                <td>${item.direction}</td>
+                                <td>${item.date}</td>
+                                <td>${item.seats.join(', ')}</td>
+                            </tr>`;
+                tableBody.innerHTML += row;
+            });
+
+            document.getElementById('seats').value = '';
+        });
+    </script>
+</body>
+</html>

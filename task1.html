@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форум</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        #message-form {
+            margin-bottom: 20px;
+        }
+        #messages {
+            list-style-type: none;
+            padding: 0;
+        }
+        .message {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        input[type="text"] {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Форум</h1>
+
+    <form id="message-form">
+        <input type="text" id="sender-name" placeholder="Ваше ім'я" required>
+        <input type="text" id="message-text" placeholder="Введіть ваше повідомлення" required>
+        <input type="submit" value="Додати">
+    </form>
+
+    <ul id="messages"></ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const messageForm = document.getElementById('message-form');
+            const senderNameInput = document.getElementById('sender-name');
+            const messageInput = document.getElementById('message-text');
+            const messagesList = document.getElementById('messages');
+
+            function addMessage(senderName, messageText) {
+                const messageItem = document.createElement('li');
+                messageItem.classList.add('message');
+                messageItem.innerHTML = `<strong>${senderName}:</strong> ${messageText}`;
+                messagesList.appendChild(messageItem);
+            }
+
+            messageForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const senderName = senderNameInput.value.trim();
+                const messageText = messageInput.value.trim();
+                
+                if (senderName !== '' && messageText !== '') {
+                    addMessage(senderName, messageText);
+                    senderNameInput.value = '';
+                    messageInput.value = '';
+                } else {
+                    alert('Будь ласка, заповніть обидва поля.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        #quiz {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Проходження тесту</h1>
+
+    <div id="quiz">
+        <div class="question">
+            <h2>Питання 1: Яка столиця України?</h2>
+            <label>
+                <input type="radio" name="q1" value="Kyiv"> Київ
+            </label>
+            <label>
+                <input type="radio" name="q1" value="Moscow"> Москва
+            </label>
+        </div>
+
+        <div class="question">
+            <h2>Питання 2: Скільки днів у звичайному році?</h2>
+            <label>
+                <input type="radio" name="q2" value="365"> 365
+            </label>
+            <label>
+                <input type="radio" name="q2" value="366"> 366
+            </label>
+        </div>
+
+        <button onclick="submitQuiz()">Завершити тест</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function submitQuiz() {
+            const q1Answer = document.querySelector('input[name="q1"]:checked');
+            const q2Answer = document.querySelector('input[name="q2"]:checked');
+
+            if (!q1Answer || !q2Answer) {
+                alert('Будь ласка, виберіть відповідь на всі питання.');
+                return;
+            }
+
+            const correctAnswers = [];
+            if (q1Answer.value === "Kyiv") {
+                correctAnswers.push('q1');
+            }
+            if (q2Answer.value === "365") {
+                correctAnswers.push('q2');
+            }
+
+            const resultDisplay = document.getElementById('result');
+            resultDisplay.innerHTML = `<h2>Ваш результат:</h2>
+                                       <p>Кількість правильних відповідей: ${correctAnswers.length}</p>`;
+        }
+    </script>
+</body>
+</html>

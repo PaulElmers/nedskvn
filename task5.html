@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Відмітка присутніх на парі</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #555;
+        }
+        form {
+            display: grid;
+            gap: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], select, input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Відмітка присутніх на парі</h1>
+
+        <form id="attendance-form">
+            <label for="group">Група:</label>
+            <select id="group" name="group">
+                <option value="group1">Група 1</option>
+                <option value="group2">Група 2</option>
+                <option value="group3">Група 3</option>
+            </select>
+
+            <label for="lecture">Пара:</label>
+            <select id="lecture" name="lecture">
+                <option value="lecture1">Пара 1</option>
+                <option value="lecture2">Пара 2</option>
+                <option value="lecture3">Пара 3</option>
+            </select>
+
+            <label for="topic">Тема заняття:</label>
+            <input type="text" id="topic" name="topic" required>
+
+            <label for="students">Присутні студенти:</label>
+            <div id="students-list"></div>
+
+            <input type="submit" value="Відмітити присутніх">
+        </form>
+
+        <h2>Вже відмічені пари</h2>
+        <table id="attendance-table">
+            <thead>
+                <tr>
+                    <th>Група</th>
+                    <th>Пара</th>
+                    <th>Тема заняття</th>
+                    <th>Присутні студенти</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const attendanceData = [];
+
+        document.getElementById('attendance-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const group = document.getElementById('group').value;
+            const lecture = document.getElementById('lecture').value;
+            const topic = document.getElementById('topic').value;
+            const studentCheckboxes = document.querySelectorAll('input[name="student"]:checked');
+            const students = Array.from(studentCheckboxes).map(checkbox => checkbox.value);
+
+            attendanceData.push({ group, lecture, topic, students });
+
+            const tableBody = document.querySelector('#attendance-table tbody');
+            tableBody.innerHTML = '';
+
+            attendanceData.forEach(item => {
+                const row = `<tr>
+                                <td>${item.group}</td>
+                                <td>${item.lecture}</td>
+                                <td>${item.topic}</td>
+                                <td>${item.students.join(', ')}</td>
+                            </tr>`;
+                tableBody.innerHTML += row;
+            });
+
+            document.getElementById('topic').value = '';
+            document.querySelectorAll('input[name="student"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        });
+
+        function populateStudents() {
+            const studentsList = document.getElementById('students-list');
+            studentsList.innerHTML = '';
+
+            const students = ['Студент 1', 'Студент 2', 'Студент 3', 'Студент 4', 'Студент 5'];
+
+            students.forEach((student, index) => {
+                const checkbox = `<input type="checkbox" name="student" value="${student}" id="student${index + 1}">
+                                  <label for="student${index + 1}">${student}</label><br>`;
+                studentsList.innerHTML += checkbox;
+            });
+        }
+
+        populateStudents();
+    </script>
+</body>
+</html>
